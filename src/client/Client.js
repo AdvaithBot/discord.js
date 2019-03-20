@@ -242,12 +242,10 @@ class Client extends BaseClient {
     this.ws.connect(gateway);
     await new Promise((resolve, reject) => {
       const onready = () => {
-        clearTimeout(timeout);
         this.removeListener(Events.DISCONNECT, ondisconnect);
         resolve();
       };
       const ondisconnect = event => {
-        clearTimeout(timeout);
         this.removeListener(Events.READY, onready);
         this.destroy();
         if (WSCodes[event.code]) {
