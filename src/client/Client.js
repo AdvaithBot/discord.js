@@ -254,13 +254,6 @@ class Client extends BaseClient {
           reject(new Error(WSCodes[event.code]));
         }
       };
-      const timeout = setTimeout(() => {
-        this.removeListener(Events.READY, onready);
-        this.removeListener(Events.DISCONNECT, ondisconnect);
-        this.destroy();
-        reject(new Error('WS_CONNECTION_TIMEOUT'));
-      }, this.options.shardCount * 25e3);
-      if (timeout.unref !== undefined) timeout.unref();
       this.once(Events.READY, onready);
       this.once(Events.DISCONNECT, ondisconnect);
     });
